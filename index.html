@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cell Exam - 50 Questions</title>
+<style>
+body { font-family: Arial; direction: ltr; }
+.question { margin-bottom: 15px; padding: 10px; border: 1px solid #ccc; }
+.correct { color: green; font-weight: bold; }
+.wrong { color: red; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<h2>Cell Structure Exam (50 Questions)</h2>
+
+<div id="quiz"></div>
+<button onclick="submitQuiz()">Submit</button>
+<h3 id="result"></h3>
+
+<script>
+const questions = [
+{q:"What is the basic unit of the body?", options:["Tissue","Organ","Cell","System"], answer:2},
+{q:"Approximate number of cells in the human body:", options:["1–5 trillion","10–20 trillion","75–100 trillion","200 trillion"], answer:2},
+{q:"Prokaryotic cells lack:", options:["Cytoplasm","Cell membrane","Nucleus","Ribosomes"], answer:2},
+{q:"Eukaryotic cells contain:", options:["No organelles","Nucleus and organelles","Only DNA","Only cytoplasm"], answer:1},
+{q:"Main structures of a eukaryotic cell:", options:["Membrane, cytoplasm, nucleus","DNA, RNA, proteins","Lipids, carbohydrates, enzymes","Cytosol, fibers, ions"], answer:0},
+{q:"Thickness of plasma membrane:", options:["1 nm","5 nm","10 nm","50 nm"], answer:2},
+{q:"Plasma membrane function:", options:["Energy production","Protein synthesis","Selective permeability","DNA storage"], answer:2},
+{q:"Major component of membrane:", options:["Carbohydrates","Proteins","DNA","Water"], answer:1},
+{q:"Phospholipid includes:", options:["Protein chains","Glycerol & fatty acids","DNA","RNA"], answer:1},
+{q:"Hydrophilic part:", options:["Tail","Head","Both","None"], answer:1},
+{q:"Hydrophobic part:", options:["Head","Tail","Both","None"], answer:1},
+{q:"Lipid-soluble transport:", options:["Channels","Diffusion","Active transport","Endocytosis"], answer:1},
+{q:"Water-soluble cross via:", options:["Bilayer","Channels","Diffusion","Osmosis only"], answer:1},
+{q:"Integral proteins:", options:["Outside","Span membrane","In nucleus","Cytosol"], answer:1},
+{q:"Peripheral proteins:", options:["Nucleus","Surface","Outside only","Center"], answer:1},
+{q:"Cytoplasm is:", options:["Solid","Jelly-like","Gas","Crystal"], answer:1},
+{q:"Cytosol is:", options:["Membrane","Fluid","DNA","Organelle"], answer:1},
+{q:"Cytoskeleton made of:", options:["DNA","Fibers","Lipids","Enzymes"], answer:1},
+{q:"Cytoskeleton function:", options:["Digestion","Energy","Support","DNA"], answer:2},
+{q:"Fiber types:", options:["2","3","4","5"], answer:1},
+{q:"Rough ER:", options:["Lipids","Proteins","DNA","Energy"], answer:1},
+{q:"Smooth ER:", options:["Proteins","DNA","Lipids","Division"], answer:2},
+{q:"Ribosomes:", options:["Lipids","Proteins","Energy","Waste"], answer:1},
+{q:"Ribosome composition:", options:["DNA","Protein","RNA+Protein","Lipids"], answer:2},
+{q:"Golgi function:", options:["Digestion","Packaging","DNA","Movement"], answer:1},
+{q:"Lysosomes contain:", options:["DNA","Enzymes","Lipids","RNA"], answer:1},
+{q:"Lysosome function:", options:["Energy","Protein","Digestion","Transport"], answer:2},
+{q:"Mitochondria:", options:["Protein","ATP","DNA","Waste"], answer:1},
+{q:"Mitochondria break:", options:["DNA","Glucose","Proteins","RNA"], answer:1},
+{q:"Centrioles:", options:["Digestion","Division","Energy","Transport"], answer:1},
+{q:"Cilia:", options:["DNA","Movement","Protein","Digestion"], answer:1},
+{q:"Flagella in:", options:["RBC","Neuron","Sperm","Muscle"], answer:2},
+{q:"Nucleus controls:", options:["Membrane","Cell","Cytoplasm","Organelles"], answer:1},
+{q:"No nucleus in:", options:["Muscle","Liver","RBC","Neuron"], answer:2},
+{q:"Nuclear membrane:", options:["Energy","Surround","Protein","Digestion"], answer:1},
+{q:"Nuclear pores:", options:["Digestion","Transport","Energy","Movement"], answer:1},
+{q:"Nucleolus contains:", options:["Lipids","DNA+RNA","Protein","Water"], answer:1},
+{q:"Nucleolus:", options:["ATP","Ribosomes","Digestion","Movement"], answer:1},
+{q:"Nuclei number:", options:["Zero","One","Two","Many"], answer:1},
+{q:"Cytoplasm location:", options:["Outside","Between","Inside","Outside membrane"], answer:1},
+{q:"Membrane communication:", options:["None","Receptors","DNA","Enzymes"], answer:1},
+{q:"Carbohydrates:", options:["Inside","Outer","Inner","Cytoplasm"], answer:1},
+{q:"Membrane type:", options:["Fully","None","Selective","Solid"], answer:2},
+{q:"Golgi modifies:", options:["DNA","Molecules","Water","Ions"], answer:1},
+{q:"Lysosome role:", options:["Renewal","DNA","Transport","Movement"], answer:0},
+{q:"Cytoskeleton anchors:", options:["DNA","Organelles","Membrane","Nucleus"], answer:1},
+{q:"Smooth ER lacks:", options:["Lipids","Enzymes","Ribosomes","Proteins"], answer:2},
+{q:"Rough ER has:", options:["Lipids","Ribosomes","DNA","Carbs"], answer:1},
+{q:"Cell is unit of:", options:["Molecules","Organs","Body","Atoms"], answer:2}
+];
+
+const quizDiv = document.getElementById("quiz");
+
+questions.forEach((q, i) => {
+let div = document.createElement("div");
+div.className = "question";
+div.innerHTML = `<p>${i+1}. ${q.q}</p>`;
+q.options.forEach((opt, j) => {
+div.innerHTML += `<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label><br>`;
+});
+quizDiv.appendChild(div);
+});
+
+function submitQuiz(){
+let score = 0;
+const qDivs = document.getElementsByClassName("question");
+
+questions.forEach((q,i)=>{
+let selected = document.querySelector(`input[name="q${i}"]:checked`);
+let div = qDivs[i];
+
+if(selected){
+if(parseInt(selected.value) === q.answer){
+score++;
+selected.parentElement.classList.add("correct");
+}else{
+div.classList.add("wrong");
+div.querySelectorAll("input")[q.answer].parentElement.classList.add("correct");
+}
+}else{
+div.classList.add("wrong");
+div.querySelectorAll("input")[q.answer].parentElement.classList.add("correct");
+}
+});
+
+document.getElementById("result").innerText = "Score: " + score + " / 50";
+}
+</script>
+
+</body>
+</html>
